@@ -7,7 +7,7 @@ const User = require('./models/user');
 const _ = require('lodash');
 
 // invoke an instance of express application.
-var app = express();
+const app = express();
 
 // set our application port
 app.set('port', 9000);
