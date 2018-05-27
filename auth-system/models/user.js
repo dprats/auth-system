@@ -24,6 +24,10 @@ var User = sequelize.define('users', {
     type: Sequelize.STRING,
     allowNull: true
   },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
 }, {
   hooks: {
     beforeCreate: (user) => {

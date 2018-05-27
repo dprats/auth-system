@@ -71,6 +71,7 @@ app.route('/signup')
       email: req.body.email,
       password: req.body.password,
       role: _.defaultTo(req.body.role, 'user'),
+      active: _.defaultTo(req.body.status, 'active'),
     }).then(user => {
         console.log(`['/signup'] User "${req.body.username}" created`);
         req.session.user = user.dataValues;
@@ -126,15 +127,32 @@ app.get('/logout', (req, res) => {
   }
 });
 
+//edit users
+app.post('/users/:id/deactivate', (req, res) => {
+  User.update(
+    { status: 'inactive' },
+    {
+      where: { id: req.params.id }
+    }).then(rowsUpdated => {
+
+    res.json({
+      rowsUpdated: rowsUpdated,
+    });
+  }).catch(error => {
+    res.redirect('/signup');
+  });
+})
+
 //get the users
 app.get('/users', (req, res) => {
   User.findAll().then(users => {
     console.log(`[/users'] User "${users.length}" found`);
     res.json(users);
   }).catch(error => {
-      res.redirect('/signup');
+    res.redirect('/signup');
   });
 })
+
 
 
 // route for handling 404 requests(unavailable routes)
