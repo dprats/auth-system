@@ -71,8 +71,7 @@ app.route('/signup')
       email: req.body.email,
       password: req.body.password,
       role: _.defaultTo(req.body.role, 'user'),
-    })
-      .then(user => {
+    }).then(user => {
         console.log(`['/signup'] User "${req.body.username}" created`);
         req.session.user = user.dataValues;
 
@@ -127,7 +126,15 @@ app.get('/logout', (req, res) => {
   }
 });
 
-//
+//get the users
+app.get('/users', (req, res) => {
+  User.findAll().then(users => {
+    console.log(`[/users'] User "${users.length}" found`);
+    res.json(users);
+  }).catch(error => {
+      res.redirect('/signup');
+  });
+})
 
 
 // route for handling 404 requests(unavailable routes)
