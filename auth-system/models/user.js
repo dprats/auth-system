@@ -19,7 +19,11 @@ var User = sequelize.define('users', {
   password: {
     type: Sequelize.STRING,
     allowNull: false
-  }
+  },
+  role: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
 }, {
   hooks: {
     beforeCreate: (user) => {

@@ -1,9 +1,10 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var morgan = require('morgan');
-var User = require('./models/user');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const morgan = require('morgan');
+const User = require('./models/user');
+const _ = require('lodash');
 
 // invoke an instance of express application.
 var app = express();
@@ -68,7 +69,8 @@ app.route('/signup')
     User.create({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      role: _.defaultTo(req.body.role, 'user'),
     })
       .then(user => {
         console.log(`['/signup'] User "${req.body.username}" created`);
@@ -124,6 +126,8 @@ app.get('/logout', (req, res) => {
     res.redirect('/login');
   }
 });
+
+//
 
 
 // route for handling 404 requests(unavailable routes)
