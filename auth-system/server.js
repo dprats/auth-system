@@ -77,10 +77,10 @@ app.route('/signup')
         req.session.user = user.dataValues;
 
 
-        res.redirect('/dashboard');
+        res.redirect('/users');
       })
       .catch(error => {
-        res.redirect('/signup');
+        res.redirect('/register');
       });
   });
 
