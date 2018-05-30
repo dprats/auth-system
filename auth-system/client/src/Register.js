@@ -12,6 +12,7 @@ class Register extends Component {
   render() {
     return (
       <div >
+        <h1>Register</h1>
         <div class="container row">
           <div class="jumbotron col-sm-4 pull-center">
             <form action="/signup" method="post">
