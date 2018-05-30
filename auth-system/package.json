@@ -23,7 +23,8 @@
     "sequelize": "^4.37.10",
     "lodash": "*",
     "eslint": "^3.8.1",
-    "eslint-config-airbnb-base": "^9.0.0"
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.0.1"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
