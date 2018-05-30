@@ -21,7 +21,9 @@
     "morgan": "^1.9.0",
     "pg": "^7.4.3",
     "sequelize": "^4.37.10",
-    "lodash": "*"
+    "lodash": "*",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb-base": "^9.0.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
