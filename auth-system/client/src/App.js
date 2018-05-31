@@ -5,13 +5,6 @@ import AuthService from './components/AuthService';
 import withAuth from './components/withAuth.js';
 const Auth = new AuthService();
 
-
-
-// import Register from './components/Register';
-// import Users from './components/Users';
-// import Login from './components/Login';
-// import Dashboard from './components/Dashboard';
-
 class App extends Component {
 
   handleLogout(){
@@ -36,26 +29,3 @@ class App extends Component {
 }
 
 export default withAuth(App);
-
-// class App extends Component {
-//   state = {users: []}
-//
-//   componentDidMount() {
-//     fetch('/users')
-//       .then(res => res.json())
-//       .then(users => this.setState({ users }));
-//   }
-//
-//   render() {
-//     return (
-//       <div className="App">
-//         <h1>Users</h1>
-//         {this.state.users.map(user =>
-//           <div key={user.id}>{user.username}</div>
-//         )}
-//       </div>
-//     );
-//   }
-// }
-
-// export default App;
