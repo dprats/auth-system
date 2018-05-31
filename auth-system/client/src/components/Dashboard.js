@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from './AuthService';
-
+const Auth = new AuthService();
 
 class Dashboard extends Component {
   constructor(props){
@@ -11,6 +11,12 @@ class Dashboard extends Component {
       dummy: 'value',
       users: []
     }
+  }
+
+  handleLogout(){
+    console.log('User logging out from /dashboard');
+    Auth.logout();
+    this.props.history.replace('/login');
   }
 
   componentDidMount() {
@@ -29,6 +35,7 @@ class Dashboard extends Component {
       <div >
         <h1>Dashboard</h1>
         <p>Welcome, {this.state.user.username}!</p>
+        <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>
 
         <h1>Users</h1>
           {this.state.users.map(user =>
