@@ -1,13 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
+const jwt = require('jsonwebtoken');
+
 const User = require('./models/user');
 const _ = require('lodash');
 
 // invoke an instance of express application.
 const app = express();
+app.use(cors());
 
 // set our application port
 app.set('port', 9000);
@@ -17,6 +21,8 @@ app.use(morgan('dev'));
 
 // initialize body-parser to parse incoming parameters requests to req.body
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 // initialize cookie-parser to allow us access the cookies stored in the browser.
 app.use(cookieParser());
@@ -28,7 +34,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: 600000
+    expires: 600000,
   }
 }));
 
@@ -65,22 +71,28 @@ app.route('/signup')
     res.sendFile(__dirname + '/public/signup.html');
   })
   .post((req, res) => {
-    console.log(`['/signup'] Creating User "${req.body.username}" created`);
+    console.log(`[/signup] Creating User "${req.body.username}" created`);
     User.create({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
       role: _.defaultTo(req.body.role, 'user'),
       active: _.defaultTo(req.body.status, 'active'),
-    }).then(user => {
-        console.log(`['/signup'] User "${req.body.username}" created`);
-        req.session.user = user.dataValues;
+    }).then((userModel) => {
+        console.log(`[/signup] User "${req.body.username}" created`);
+        const user = userModel.dataValues;
+        req.session.user = userModel.dataValues;
 
-
-        res.redirect('/users');
-      })
-      .catch(error => {
-        res.redirect('/register');
+        jwt.sign({ user }, 'secretKey', (err, token) => {
+          if (err) {
+            console.log(err);
+            return res.status(403);
+          }
+          return res.json({ token });
+        });
+      }).catch(error => {
+        console.log(`[/signup] Creating User "${req.body.username}" error: ${error}`);
+        res.status(403);
       });
   });
 
@@ -91,17 +103,18 @@ app.route('/login')
     res.sendFile(__dirname + '/public/login.html');
   })
   .post((req, res) => {
-    var username = req.body.username,
-      password = req.body.password;
+    const username = req.body.username;
+    const password = req.body.password;
 
-    User.findOne({ where: { username: username } }).then(function (user) {
+    User.findOne({ where: { username, } }).then((user) => {
       if (!user) {
         res.redirect('/login');
+        return res.status(400).json({ error: 'no user found' });
       } else if (!user.validPassword(password)) {
-        res.redirect('/login');
+        return res.status(400).json({ error: 'invalid login' });
       } else {
         req.session.user = user.dataValues;
-        res.redirect('/dashboard');
+        return res.json(user);
       }
     });
   });
@@ -163,3 +176,9 @@ app.use(function (req, res, next) {
 
 // start the express server
 app.listen(app.get('port'), () => console.log(`App started on port ${app.get('port')}`));
+
+
+//Helper methods
+function verifyToken(req, res, next) {
+
+}
