@@ -80,10 +80,11 @@ app.route('/signup')
       active: _.defaultTo(req.body.status, 'active'),
     }).then((userModel) => {
         console.log(`[/signup] User "${req.body.username}" created`);
-        const user = userModel.dataValues;
-        req.session.user = userModel.dataValues;
+        const user = _.cloneDeep(userModel.dataValues);
+        delete user.password;
+        req.session.user = user;
 
-        jwt.sign({ user }, 'secretKey', (err, token) => {
+        return jwt.sign({ user }, 'secretKey', (err, token) => {
           if (err) {
             console.log(err);
             return res.status(403);
@@ -106,15 +107,24 @@ app.route('/login')
     const username = req.body.username;
     const password = req.body.password;
 
-    User.findOne({ where: { username, } }).then((user) => {
-      if (!user) {
-        res.redirect('/login');
+    User.findOne({ where: { username } }).then((userModel) => {
+      if (!userModel) {
         return res.status(400).json({ error: 'no user found' });
-      } else if (!user.validPassword(password)) {
+      } else if (!userModel.validPassword(password)) {
         return res.status(400).json({ error: 'invalid login' });
       } else {
-        req.session.user = user.dataValues;
-        return res.json(user);
+        const user = _.cloneDeep(userModel.dataValues);
+        delete user.password;
+        req.session.user = user;
+
+        return jwt.sign({ user }, 'secretKey', (err, token) => {
+          if (err) {
+            console.log(err);
+            return res.status(403);
+          }
+          return res.json({ token });
+        });
+        // return res.status(403);
       }
     });
   });
