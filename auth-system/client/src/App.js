@@ -1,27 +1,41 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Register from './Register';
-import Users from './Users';
-import Login from './Login';
-import Dashboard from './Dashboard';
-
-const Home = () => <h1>Home</h1>
-// const Users = () => <h1>Users</h1>
-// const SignUp = () => <h1>SignUp</h1>
-// const Login = () => <h1>Login</h1>
+import logo from './logo.svg';
+import './App.css';
+import AuthService from './components/AuthService';
+import withAuth from './components/withAuth.js';
+const Auth = new AuthService();
 
 
-const App = () => (
-  <Router>
-    <div>
-      <Route exact path="/" component={Home} />
-      <Route path="/users" component={Users}/>
-      <Route path="/register" component={Register}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/dashboard" component={Dashboard}/>
-    </div>
-  </Router>
-);
+
+// import Register from './components/Register';
+// import Users from './components/Users';
+// import Login from './components/Login';
+// import Dashboard from './components/Dashboard';
+
+class App extends Component {
+
+  handleLogout(){
+    Auth.logout();
+    this.props.history.replace('/login');
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+          <div className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h2>Welcome {this.props.user.username}</h2>
+          </div>
+        <p className="App">
+          <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>
+        </p>
+      </div>
+    );
+  }
+}
+
+export default withAuth(App);
 
 // class App extends Component {
 //   state = {users: []}
@@ -44,4 +58,4 @@ const App = () => (
 //   }
 // }
 
-export default App;
+// export default App;
