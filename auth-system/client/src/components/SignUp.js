@@ -6,8 +6,8 @@ import AuthService from './AuthService';
 
 class SignUp extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.Auth = new AuthService();
@@ -26,7 +26,7 @@ class SignUp extends Component {
 
     this.Auth.signup(this.state.username, this.state.email, this.state.password)
       .then(res =>{
-        this.props.history.replace('/');
+        this.props.history.replace('/dashboard');
       })
       .catch(err =>{
         alert(err);
@@ -36,8 +36,10 @@ class SignUp extends Component {
 
   //Add redirection if we are already loggedIn
   componentWillMount(){
-    if(this.Auth.loggedIn())
-      this.props.history.replace('/');
+    if(this.Auth.loggedIn()) {
+      console.log('User is logged in...');
+      this.props.history.replace('/dashboard');
+    }
   }
 
   render() {

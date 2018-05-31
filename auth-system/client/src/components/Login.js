@@ -18,9 +18,7 @@ class Login extends Component {
 
     this.Auth.login(this.state.username,this.state.password)
       .then(res =>{
-
         this.props.history.replace('/dashboard');
-
       })
       .catch(err =>{
         alert(err);
@@ -29,8 +27,10 @@ class Login extends Component {
 
   //Add redirection if we are already loggedIn
   componentWillMount(){
-    if(this.Auth.loggedIn())
-      this.props.history.replace('/');
+    if(this.Auth.loggedIn()) {
+      console.log('User is logged in...');
+      this.props.history.replace('/dashboard');
+    }
   }
 
   render() {
