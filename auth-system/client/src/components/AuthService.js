@@ -30,6 +30,7 @@ export default class AuthService {
       const response = await axios(options);
       console.log(JSON.stringify(response, null, '\t'));
       this.setToken(response.token);
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -51,8 +52,11 @@ export default class AuthService {
 
   loggedIn() {
     // Checks if there is a saved token and it's still valid
-    const token = this.getToken(); // GEtting token from localstorage
-    return !!token && !this.isTokenExpired(token); // handwaiving here
+    const token = this.getToken(); // Getting token from localstorage
+    if (token && !this.isTokenExpired(token)) {
+      return true;
+    }
+    return false;
   }
 
   isTokenExpired(token) {
@@ -102,14 +106,14 @@ export default class AuthService {
   fetch(url, options) {
     // performs api calls sending the required authentication headers
     const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     };
 
     // Setting Authorization header
     // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
     if (this.loggedIn()) {
-      headers['Authorization'] = 'Bearer ' + this.getToken()
+      headers.Authorization = 'Bearer ' + this.getToken();
     }
 
     return fetch(url, {
@@ -125,9 +129,9 @@ export default class AuthService {
     if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
       return response
     } else {
-      var error = new Error(response.statusText)
-      error.response = response
-      throw error
+      var error = new Error(response.statusText);
+      error.response = response;
+      throw error;
     }
   }
 }
