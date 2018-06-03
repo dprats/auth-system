@@ -1,11 +1,12 @@
-var Sequelize = require('sequelize');
-var bcrypt = require('bcrypt');
+const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 
 // create a sequelize instance with our local postgres database information.
-var sequelize = new Sequelize('postgres://postgres@localhost:5432/auth-system');
+const postgresURL = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/auth-system';
+const sequelize = new Sequelize(postgresURL);
 
 // setup User model and its fields.
-var User = sequelize.define('users', {
+const User = sequelize.define('users', {
   username: {
     type: Sequelize.STRING,
     unique: true,
