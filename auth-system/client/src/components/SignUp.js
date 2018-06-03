@@ -76,6 +76,9 @@ class SignUp extends Component {
               type="submit"
             />
           </form>
+          <br/>
+          <br/>
+          <a href="/login">Login</a>
         </div>
       </div>
     );
