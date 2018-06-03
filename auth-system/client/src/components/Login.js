@@ -20,8 +20,12 @@ class Login extends Component {
       .then(res =>{
         this.props.history.replace('/dashboard');
       })
-      .catch(err =>{
-        alert(err);
+      .catch(err => {
+        if (err.response && err.response.data && err.response.data.error) {
+          alert(err.response.data.error);
+        } else {
+          alert(err);
+        }
       })
   }
 
