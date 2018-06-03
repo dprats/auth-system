@@ -9,13 +9,13 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 1. Starting the server: this runs on port 9000
 
-node server.js
+```node server.js```
 
 2. Starting the React Client: this runs on port 3000
 
-a) cd into /client
+a) ```cd into /client```
 
-b) npm start
+b) ```npm start```
 
 ## Status Updates
 
