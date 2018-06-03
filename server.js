@@ -14,7 +14,8 @@ const app = express();
 app.use(cors());
 
 // set our application port
-app.set('port', 9000);
+// app.set('port', 9000);
+const port = process.env.PORT || 9000; //Heroku sets its own port
 
 // set morgan to log info about our requests for development use.
 app.use(morgan('dev'));
@@ -185,10 +186,10 @@ app.use(function (req, res, next) {
 
 
 // start the express server
-app.listen(app.get('port'), () => console.log(`App started on port ${app.get('port')}`));
+app.listen(port, () => console.log(`App started on port ${port}`));
 
 
 //Helper methods
-function verifyToken(req, res, next) {
-
-}
+// function verifyToken(req, res, next) {
+//
+// }
