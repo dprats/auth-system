@@ -36,18 +36,48 @@ export default class AuthService {
     }
   }
 
-  login(username, password) {
+  async login(username, password) {
+
+
+
+
     // Get a token from api server using the fetch api
-    return this.fetch(`${this.domain}/login`, {
+    // return this.fetch(`${this.domain}/login`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     username,
+    //     password,
+    //   })
+    // }).then(res => {
+    //   this.setToken(res.token); // Setting the token in localStorage
+    //   return Promise.resolve(res);
+    // });
+
+    const loginUrl = `${this.domain}/login`;
+
+    const options = {
       method: 'POST',
-      body: JSON.stringify({
+      headers: {
+        // 'Access-Control-Allow-Origin': '*',
+      },
+      url: loginUrl,
+      data: {
         username,
         password,
-      })
-    }).then(res => {
-      this.setToken(res.token); // Setting the token in localStorage
-      return Promise.resolve(res);
-    });
+      },
+    };
+    try {
+      const response = await axios(options);
+      console.log(JSON.stringify(response, null, '\t'));
+      if (response.token) {
+        this.setToken(response.token);
+        return response;
+      }
+      throw new Error('Login failure');
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   loggedIn() {
