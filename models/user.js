@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 // create a sequelize instance with our local postgres database information.
 const postgresURL = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/auth-system';
+console.log(`[MODEL/USER] URL: ${postgresURL}`);
 const sequelize = new Sequelize(postgresURL);
 
 // setup User model and its fields.
