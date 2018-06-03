@@ -55,7 +55,7 @@ class Login extends Component {
               name="password"
               type="password"
               onChange={this.handleChange}
-              required/>
+              required />
             <input
               className="form-submit-login"
               value="SUBMIT"
