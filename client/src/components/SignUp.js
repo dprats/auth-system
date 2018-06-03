@@ -54,21 +54,21 @@ class SignUp extends Component {
               name="username"
               type="text"
               onChange={this.handleChange}
-            />
+              required />
             <input
               className="form-item"
               placeholder="Email goes here..."
               name="email"
               type="text"
               onChange={this.handleChange}
-            />
+              required />
             <input
               className="form-item"
               placeholder="Password goes here..."
               name="password"
               type="password"
               onChange={this.handleChange}
-            />
+              required />
 
             <input
               className="form-submit"

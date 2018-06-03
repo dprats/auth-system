@@ -48,14 +48,14 @@ class Login extends Component {
               name="username"
               type="text"
               onChange={this.handleChange}
-            />
+              required />
             <input
               className="form-item"
               placeholder="Password goes here..."
               name="password"
               type="password"
               onChange={this.handleChange}
-            />
+              required/>
             <input
               className="form-submit-login"
               value="SUBMIT"
