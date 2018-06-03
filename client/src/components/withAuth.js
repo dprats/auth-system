@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import AuthService from './AuthService';
 
 export default function withAuth(AuthComponent) {
-  const Auth = new AuthService('http://localhost:9000');
+  // const url = 'http://localhost';
+  // const url = 'https://vast-ravine-24080.herokuapp.com';
+  // const port = 9000;
+  // const backendUrl = `${url}:${port}`;
+  const Auth = new AuthService();
 
   return class AuthWrapped extends Component {
 

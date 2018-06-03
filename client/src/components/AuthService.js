@@ -4,11 +4,17 @@ import axios from 'axios';
 export default class AuthService {
   // Initializing important variables
   constructor(domain) {
-    this.domain = domain || 'http://localhost:9000'; // API server domain
+    const apiURl = 'https://vast-ravine-24080.herokuapp.com';
+    // this.domain = domain || 'http://localhost:9000'; // API server domain
+    this.domain = apiURl;
     this.fetch = this.fetch.bind(this); // React binding stuff
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
     this.getProfile = this.getProfile.bind(this);
+  }
+
+  getDomain() {
+    return this.domain;
   }
 
   async signup(username, email, password) {
@@ -37,9 +43,6 @@ export default class AuthService {
   }
 
   async login(username, password) {
-
-
-
 
     // Get a token from api server using the fetch api
     // return this.fetch(`${this.domain}/login`, {

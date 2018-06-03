@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from './AuthService';
+import axios from 'axios/index'
 const Auth = new AuthService();
 
 class Dashboard extends Component {
@@ -19,15 +20,38 @@ class Dashboard extends Component {
     this.props.history.replace('/login');
   }
 
-  componentDidMount() {
+  async getUsers() {
+    const domain = this.Auth.getDomain();
+    const url = `${domain}/users`;
+
+    const options = {
+      method: 'GET',
+      headers: {
+        // 'Access-Control-Allow-Origin': '*',
+      },
+      url,
+    };
+    try {
+      const response = await axios(options);
+      // console.log(JSON.stringify(response, null, '\t'));
+      const users = response.data;
+      this.setState({ users });
+      // return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async componentDidMount() {
     const profile = this.Auth.getProfile();
     this.setState({
       user: profile,
     });
 
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
+    // fetch('/users')
+    //   .then(res => res.json())
+    //   .then(users => this.setState({ users }));
+    await this.getUsers();
   }
 
   render() {
