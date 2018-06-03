@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
+const path = require('path');
+
 
 const User = require('./models/user');
 const _ = require('lodash');
@@ -48,6 +50,9 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 // middleware function to check for logged-in users
