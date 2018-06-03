@@ -35,7 +35,16 @@ export default class AuthService {
     try {
       const response = await axios(options);
       console.log(JSON.stringify(response, null, '\t'));
-      this.setToken(response.token);
+      let token = response.token;
+      if (!token && response.data && response.data.token) {
+        token = response.data.token;
+      }
+      if (token) {
+        this.setToken(token);
+        return response;
+      } else {
+        console.log('No Token found');
+      }
       return response;
     } catch (error) {
       console.error(error);
@@ -130,8 +139,8 @@ export default class AuthService {
         console.error(error);
         return {};
       }
-
     }
+    console.log('No Token found');
     return {};
   }
 
