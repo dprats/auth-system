@@ -109,9 +109,9 @@ app.route('/login')
 
     User.findOne({ where: { username } }).then((userModel) => {
       if (!userModel) {
-        return res.status(400).json({ error: 'no user found' });
+        return res.status(400).send({ error: 'No user found' });
       } else if (!userModel.validPassword(password)) {
-        return res.status(400).json({ error: 'invalid login' });
+        return res.status(422).send({ error: 'Invalid login' });
       } else {
         const user = _.cloneDeep(userModel.dataValues);
         delete user.password;
