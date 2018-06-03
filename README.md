@@ -8,7 +8,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 ## Structure
 This repo has has essentially two apps that talk to each other via API calls
 - Front end: React App that runs on port 3000
-- Front end: A Node/Express API app that runs on port 9000
+- Backend end: A Node/Express API app that runs on port 9000
 
 The apps are separated because I have found that having a clean separation makes the API design much cleaner from the start.
 
