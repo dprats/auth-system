@@ -12,8 +12,12 @@ This repo has has essentially two apps that talk to each other via API calls
 
 The apps are separated because I have found that having a clean separation makes the API design much cleaner from the start.
 
+## Viewing the app on Heroku:
 
-## Starting the this app locally
+https://vast-ravine-24080.herokuapp.com/
+
+
+## Running the app locally
 
 1. Starting the server: this runs on port 9000
 
@@ -62,6 +66,8 @@ a) name, email, password
 
 16. [ ] React app: batch create users via CSV in /users page
 
-17. [ ] deploy to Heroku
+17. [x] deploy to node.js backend to Heroku
 
-18. [ ] Code clean up
+18. [x] Have postgres on Heroku
+
+19. [x] Point React app to heroku server (instead of local)
