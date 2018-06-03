@@ -14,6 +14,7 @@ node server.js
 2. Starting the React Client: this runs on port 3000
 
 a) cd into /client
+
 b) npm start
 
 ## Status Updates
