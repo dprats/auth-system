@@ -69,8 +69,8 @@ export default class AuthService {
     try {
       const response = await axios(options);
       console.log(JSON.stringify(response, null, '\t'));
-      if (response.token) {
-        this.setToken(response.token);
+      if (response.data.token) {
+        this.setToken(response.data.token);
         return response;
       }
       throw new Error('Login failure');
