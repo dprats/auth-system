@@ -5,7 +5,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-## Starting the app on local
+## Structure
+This repo has has essentially two apps that talk to each other via API calls
+- Front end: React App that runs on port 3000
+- Front end: A Node/Express API app that runs on port 9000
+
+The apps are separated because I have found that having a clean separation makes the API design much cleaner from the start.
+
+
+## Starting the this app locally
 
 1. Starting the server: this runs on port 9000
 
